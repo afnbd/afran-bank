@@ -13,8 +13,8 @@
             <h1 class="text-center">Welcome to Afran Bank</h1>
             <div class="submit-area">
                 <h4>Login</h4>
-                <input class="form-control" type="email" name="" id="" placeholder="Enter Your gmail."><br>
-                <input class="form-control" type="password" name="" id="" placeholder="Enter your password."><br>
+                <input class="form-control" type="email" placeholder="Enter Your gmail."><br>
+                <input class="form-control" type="password" placeholder="Enter your password."><br>
             
                 <input id="login" class="btn btn-outline-success btn-transition" type="submit" value="Submit">    
             </div>
@@ -24,19 +24,19 @@
                 <div class="col-md-4">
                    <div class="deposit status">
                     <h6>Deposit</h6>
-                    <h2>0.00</h2>
+                    <h2>$ <span id="crruentDeposit">00</span></h2>
                    </div>
                 </div>
                 <div class="col-md-4">
                    <div class="widthraw status">
                     <h6>Widthraw</h6>
-                    <h2>0.00</h2>
+                    <h2><span id="currentWidthraw">00</span></h2>
                    </div>
                 </div>
                 <div class="col-md-4">
                   <div class="balance status">
                     <h6>Balance</h6>
-                    <h2>1230.00</h2>
+                    <h2>$<span id="currentBalance">1200</span></h2>
                   </div>
                 </div>
             </div>
@@ -44,21 +44,22 @@
                 <div class="col-md-6">
                     <div class="submit-area">
                         <h5>Deposit</h5>
-                        <input class="form-control" type="text" name="" id="" placeholder ="$ you want amount deposite."><br>
-                        <input  class="btn btn-success" type="button" value="Deposit">
+                        <input id="amountDeposit" class="form-control" type="text" name="" id="" placeholder ="$ you want amount deposite."><br>
+                        <input id="addDeposit"  class="btn btn-success" type="button" value="Deposit">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="submit-area">
                         <h5>Widthraw</h5>
-                        <input class="form-control" type="text" name="" id="" placeholder="$ you want amount widthraw."><br>
-                        <input  class="btn btn-success" type="button" value="Widthraw">
+                        <input id ="widthrawAmount" class="form-control" type="text" name="" id="" placeholder="$ you want amount widthraw."><br>
+                        <input id ="addWidthraw" class="btn btn-success" type="button" value="Widthraw">
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
+           //login button handler 
             const loginBtn = document.getElementById("login");
             loginBtn.addEventListener("click", function(){
                 const loginArea = document.getElementById("login-area");
@@ -66,6 +67,43 @@
                 const transectinArea = document.getElementById("transection-area");
                 transectinArea.style.display="block";
             })
+            //Deposit button handler
+            const depositBtn = document.getElementById('addDeposit');
+            depositBtn.addEventListener('click', function(){
+            const depositNumber = getInputNumber('amountDeposit');
+               
+            //    const crruentDeposit = document.getElementById('crruentDeposit').innerText;
+            //    const crruentDepositNumber = parseFloat(crruentDeposit);
+            //    const totalDepositAmount = depositNumber + crruentDepositNumber;
+            //    document.getElementById('crruentDeposit').innerText = totalDepositAmount;
+               document.getElementById('amountDeposit').value="";
+               
+               updateSpanText("crruentDeposit", depositNumber);
+               updateSpanText("currentBalance", depositNumber);
+
+            })
+            // widthraw button event handler 
+            const widthrawBtn = document.getElementById("addWidthraw");
+                widthrawBtn.addEventListener("click", function(){
+                   const widthrawAmount = getInputNumber("widthrawAmount");
+                  updateSpanText("currentWidthraw", widthrawAmount);
+                  updateSpanText("currentBalance", -1* widthrawAmount);
+                  document.getElementById("widthrawAmount").value = "";
+                    
+
+                })
+            function getInputNumber(id){
+                const amount = document.getElementById(id).value;
+                const amountNumber = parseFloat(amount);
+                return amountNumber;
+            }
+            function updateSpanText(id, depositNumber){
+                const current= document.getElementById(id).innerText;
+                const currentNumber = parseFloat(current);
+                const totalAmount = depositNumber + currentNumber;
+                document.getElementById(id).innerText = totalAmount;
+            }
+        
         </script>
     </body>
 </html>
